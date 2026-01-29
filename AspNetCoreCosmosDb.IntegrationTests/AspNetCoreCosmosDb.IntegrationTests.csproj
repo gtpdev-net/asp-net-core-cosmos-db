@@ -33,11 +33,11 @@
   </ItemGroup>
 
   <Target Name="CopyTestingSettingsToMainProject" BeforeTargets="Build">
-    <Copy SourceFiles="appsettings.Testing.json" DestinationFolder="..\AspNetCoreCosmosDb\" />
+    <Copy SourceFiles="..\AspNetCoreCosmosDb\appsettings.Testing.json" DestinationFolder="." />
   </Target>
 
   <Target Name="CleanupTestingSettings" AfterTargets="VSTest">
-    <Delete Files="..\AspNetCoreCosmosDb\appsettings.Testing.json" />
+    <Delete Files="..\AspNetCoreCosmosDb.IntegrationTests\appsettings.Testing.json" />
   </Target>
 
 </Project>
