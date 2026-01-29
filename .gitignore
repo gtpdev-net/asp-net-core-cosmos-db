@@ -64,6 +64,10 @@ Desktop.ini
 # Azure Functions
 local.settings.json
 
+# Integration test config copied to main project (auto-generated)
+AspNetCoreCosmosDb.IntegrationTests/appsettings.Testing.json
+
 # Rider
 .idea/
 *.sln.iml
+
