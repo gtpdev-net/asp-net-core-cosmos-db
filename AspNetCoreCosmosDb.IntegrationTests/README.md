@@ -83,12 +83,13 @@ az login
 
 Ensure your IP address is allowed in the Cosmos DB firewall rules or that "Allow access from Azure Portal" is enabled.
 
-### Test Data Cleanup
+## Test Data Cleanup
 
-Integration tests create test data with category "IntegrationTest". You may want to clean this up periodically:
+Integration tests now include **automatic cleanup** of all test data:
 
-```bash
-# Query for test data in Cosmos DB
-SELECT * FROM c WHERE c.category = "IntegrationTest"
-```
+- **Per-Test Cleanup**: Each test that creates data automatically tracks and removes it after completion
+- **Collection Cleanup**: Before and after all tests run, a batch cleanup removes any leftover "IntegrationTest" category items
+- **Failure-Safe**: Even if a test fails, cleanup runs to prevent data accumulation
+
+All test data uses the category `"IntegrationTest"` for easy identification and cleanup. No manual cleanup is needed.
 

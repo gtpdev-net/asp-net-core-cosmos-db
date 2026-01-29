@@ -1,9 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using AspNetCoreCosmosDb.Entities;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using AspNetCoreCosmosDb.IntegrationTests.TestBase;
 
 namespace AspNetCoreCosmosDb.IntegrationTests.Api;
 
@@ -11,33 +9,20 @@ namespace AspNetCoreCosmosDb.IntegrationTests.Api;
 /// Integration tests for the Examples API endpoints.
 /// These tests use WebApplicationFactory to create an in-memory test server
 /// and connect to the configured Cosmos DB instance.
+/// All test data is automatically cleaned up after each test.
 /// </summary>
-public class ExamplesApiTests : IClassFixture<WebApplicationFactory<Program>>
+[Collection("Integration Tests")]
+public class ExamplesApiTests : IntegrationTestBase
 {
-    private readonly WebApplicationFactory<Program> _factory;
-    private readonly HttpClient _client;
-
-    public ExamplesApiTests(WebApplicationFactory<Program> factory)
+    public ExamplesApiTests(TestCollectionFixture fixture) : base(fixture.Factory)
     {
-        _factory = factory.WithWebHostBuilder(builder =>
-        {
-            builder.UseEnvironment("Testing");
-            
-            builder.ConfigureAppConfiguration((context, config) =>
-            {
-                // Add the Testing configuration
-                config.AddJsonFile("appsettings.Testing.json", optional: false);
-            });
-        });
-
-        _client = _factory.CreateClient();
     }
 
     [Fact]
     public async Task GetAll_ShouldReturnSuccessStatusCode()
     {
         // Act
-        var response = await _client.GetAsync("/api/examples");
+        var response = await Client.GetAsync("/api/examples");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -47,7 +32,7 @@ public class ExamplesApiTests : IClassFixture<WebApplicationFactory<Program>>
     public async Task GetAll_ShouldReturnJsonContent()
     {
         // Act
-        var response = await _client.GetAsync("/api/examples");
+        var response = await Client.GetAsync("/api/examples");
 
         // Assert
         response.Content.Headers.ContentType?.MediaType.Should().Be("application/json");
@@ -60,7 +45,7 @@ public class ExamplesApiTests : IClassFixture<WebApplicationFactory<Program>>
         var category = "Electronics";
 
         // Act
-        var response = await _client.GetAsync($"/api/examples/category/{category}");
+        var response = await Client.GetAsync($"/api/examples/category/{category}");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -70,7 +55,7 @@ public class ExamplesApiTests : IClassFixture<WebApplicationFactory<Program>>
     public async Task GetInStock_ShouldReturnSuccessStatusCode()
     {
         // Act
-        var response = await _client.GetAsync("/api/examples/in-stock");
+        var response = await Client.GetAsync("/api/examples/in-stock");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -90,7 +75,7 @@ public class ExamplesApiTests : IClassFixture<WebApplicationFactory<Program>>
         };
 
         // Act
-        var response = await _client.PostAsJsonAsync("/api/examples", newExample);
+        var response = await Client.PostAsJsonAsync("/api/examples", newExample);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -100,6 +85,9 @@ public class ExamplesApiTests : IClassFixture<WebApplicationFactory<Program>>
         createdExample!.Name.Should().Be(newExample.Name);
         createdExample.Category.Should().Be(newExample.Category);
         createdExample.Price.Should().Be(newExample.Price);
+        
+        // Track for cleanup
+        TrackCreatedItem(createdExample);
     }
 
     [Fact]
@@ -114,15 +102,18 @@ public class ExamplesApiTests : IClassFixture<WebApplicationFactory<Program>>
             InStock = true
         };
         
-        var createResponse = await _client.PostAsJsonAsync("/api/examples", newExample);
+        var createResponse = await Client.PostAsJsonAsync("/api/examples", newExample);
         var createdExample = await createResponse.Content.ReadFromJsonAsync<Example>();
+        
+        // Track for cleanup
+        TrackCreatedItem(createdExample!);
         
         // Update the example
         createdExample!.Name = $"Updated Product {Guid.NewGuid()}";
         createdExample.Price = 149.99m;
 
         // Act
-        var response = await _client.PutAsJsonAsync($"/api/examples/{createdExample.Id}", createdExample);
+        var response = await Client.PutAsJsonAsync($"/api/examples/{createdExample.Id}", createdExample);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -145,17 +136,20 @@ public class ExamplesApiTests : IClassFixture<WebApplicationFactory<Program>>
             InStock = true
         };
         
-        var createResponse = await _client.PostAsJsonAsync("/api/examples", newExample);
+        var createResponse = await Client.PostAsJsonAsync("/api/examples", newExample);
         var createdExample = await createResponse.Content.ReadFromJsonAsync<Example>();
+        
+        // Track for cleanup (in case delete fails)
+        TrackCreatedItem(createdExample!);
 
         // Act
-        var response = await _client.DeleteAsync($"/api/examples/{createdExample!.Id}?category={createdExample.Category}");
+        var response = await Client.DeleteAsync($"/api/examples/{createdExample!.Id}?category={createdExample.Category}");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         
         // Verify it's actually deleted
-        var getResponse = await _client.GetAsync($"/api/examples/{createdExample.Id}?category={createdExample.Category}");
+        var getResponse = await Client.GetAsync($"/api/examples/{createdExample.Id}?category={createdExample.Category}");
         getResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
@@ -163,7 +157,7 @@ public class ExamplesApiTests : IClassFixture<WebApplicationFactory<Program>>
     public async Task SwaggerEndpoint_ShouldBeAccessible()
     {
         // Act
-        var response = await _client.GetAsync("/swagger/index.html");
+        var response = await Client.GetAsync("/swagger/index.html");
 
         // Assert
         // Swagger is only available in Development mode by default
