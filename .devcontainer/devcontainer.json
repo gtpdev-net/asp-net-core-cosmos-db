@@ -29,7 +29,6 @@
 				"ms-azuretools.vscode-azurefunctions",
 				"ms-azuretools.vscode-cosmosdb",
 				"ms-azuretools.vscode-bicep",
-				"ms-vscode.azure-account",
 				"ms-azuretools.azure-dev",
 				
 				// PowerShell
@@ -42,8 +41,6 @@
 				// Additional helpful extensions
 				"ms-vscode.vscode-json-languageservice",
 				"editorconfig.editorconfig",
-				"streetsidesoftware.code-spell-checker",
-				"visualstudioexptteam.vscodeintellicode",
 				"github.copilot"
 			],
 			"settings": {
