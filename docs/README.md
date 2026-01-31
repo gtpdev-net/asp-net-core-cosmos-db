@@ -1,6 +1,6 @@
 # Documentation Overview
 
-This folder contains architecture documentation, decision records, and deployment guides for the ASP.NET Core Cosmos DB solution.
+This folder contains architecture documentation, decision records, and deployment guides for the ASP.NET Core DataLayer API solution.
 
 ## 🎯 Start Here
 

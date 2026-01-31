@@ -1,17 +1,17 @@
 # Testing Setup Complete! 🎉
 
-Both unit and integration test projects have been successfully set up for your ASP.NET Core Cosmos DB application.
+Both unit and integration test projects have been successfully set up for your ASP.NET Core DataLayer API application.
 
 ## What Was Created
 
-### 1. **Unit Test Project** (`AspNetCoreCosmosDb.UnitTests`)
+### 1. **Unit Test Project** (`DataLayer.API.Examples.UnitTests`)
 - **Framework**: xUnit with Moq and FluentAssertions
 - **Test Coverage**: 16 passing tests
   - 8 tests for `ExampleService`
   - 8 tests for `ExamplesController`
 - **Purpose**: Test business logic in isolation without external dependencies
 
-### 2. **Integration Test Project** (`AspNetCoreCosmosDb.IntegrationTests`)
+### 2. **Integration Test Project** (`DataLayer.API.Examples.IntegrationTests`)
 - **Framework**: xUnit with WebApplicationFactory
 - **Test Coverage**: 8 API endpoint tests
 - **Purpose**: Test full HTTP request/response pipeline
@@ -20,12 +20,12 @@ Both unit and integration test projects have been successfully set up for your A
 
 ### Run All Unit Tests
 ```bash
-dotnet test AspNetCoreCosmosDb.UnitTests/AspNetCoreCosmosDb.UnitTests.csproj
+dotnet test DataLayer.API.Examples.UnitTests/DataLayer.API.Examples.UnitTests.csproj
 ```
 
 ### Run All Integration Tests
 ```bash
-dotnet test AspNetCoreCosmosDb.IntegrationTests/AspNetCoreCosmosDb.IntegrationTests.csproj
+dotnet test DataLayer.API.Examples.IntegrationTests/DataLayer.API.Examples.IntegrationTests.csproj
 ```
 
 ### Run All Tests in Solution
@@ -91,19 +91,19 @@ Configure a test Cosmos DB account in Azure and add connection details to user s
 ## Project Structure
 
 ```
-AspNetCoreCosmosDb.sln
-├── AspNetCoreCosmosDb/              # Main application
-├── AspNetCoreCosmosDb.UnitTests/    # Unit tests (isolated, fast)
+DataLayer.API.Examples.sln
+├── DataLayer.API.Examples/              # Main application
+├── DataLayer.API.Examples.UnitTests/    # Unit tests (isolated, fast)
 │   ├── Controllers/
 │   │   └── ExamplesControllerTests.cs
 │   ├── Services/
 │   │   └── ExampleServiceTests.cs
-│   └── AspNetCoreCosmosDb.UnitTests.csproj
-└── AspNetCoreCosmosDb.IntegrationTests/  # Integration tests (full stack)
+│   └── DataLayer.API.Examples.UnitTests.csproj
+└── DataLayer.API.Examples.IntegrationTests/  # Integration tests (full stack)
     ├── Api/
     │   └── ExamplesApiTests.cs
     ├── README.md
-    └── AspNetCoreCosmosDb.IntegrationTests.csproj
+    └── DataLayer.API.Examples.IntegrationTests.csproj
 ```
 
 ## Test Examples
@@ -155,7 +155,7 @@ Add this to your CI/CD pipeline:
   run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
   
 - name: Run Unit Tests Only
-  run: dotnet test AspNetCoreCosmosDb.UnitTests --no-build
+  run: dotnet test DataLayer.API.Examples.UnitTests --no-build
 ```
 
 ## Additional Resources
@@ -168,4 +168,4 @@ Add this to your CI/CD pipeline:
 
 ---
 
-**You can now run `dotnet test AspNetCoreCosmosDb.UnitTests` to verify your application logic without needing Swagger UI!**
+**You can now run `dotnet test DataLayer.API.Examples.UnitTests` to verify your application logic without needing Swagger UI!**

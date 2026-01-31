@@ -65,7 +65,7 @@ Desktop.ini
 local.settings.json
 
 # Integration test config copied to main project (auto-generated)
-AspNetCoreCosmosDb.IntegrationTests/appsettings.Testing.json
+DataLayer.API.Examples.IntegrationTests/appsettings.Testing.json
 
 # Rider
 .idea/

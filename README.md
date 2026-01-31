@@ -1,4 +1,4 @@
-# ASP.NET Core Cosmos DB
+# ASP.NET Core DataLayer API
 
 A production-ready ASP.NET Core 8.0 Web API template demonstrating best practices for integrating Azure Cosmos DB with clean architecture, repository pattern, and comprehensive testing.
 
@@ -18,15 +18,15 @@ A production-ready ASP.NET Core 8.0 Web API template demonstrating best practice
 ## Project Structure
 
 ```
-├── AspNetCoreCosmosDb/              # Main API project
+├── DataLayer.API.Examples/              # Main API project
 │   ├── Configuration/               # Configuration models
 │   ├── Controllers/                 # API controllers
 │   ├── Entities/                    # Domain entities
 │   ├── Extensions/                  # Service registration extensions
 │   ├── Repositories/                # Data access layer
 │   └── Services/                    # Business logic layer
-├── AspNetCoreCosmosDb.UnitTests/    # Unit tests for services and controllers
-└── AspNetCoreCosmosDb.IntegrationTests/  # API integration tests
+├── DataLayer.API.Examples.UnitTests/    # Unit tests for services and controllers
+└── DataLayer.API.Examples.IntegrationTests/  # API integration tests
 ```
 
 ## Getting Started
@@ -67,7 +67,7 @@ az account set --subscription "your-subscription-id"
 dotnet build
 
 # Run the API
-dotnet run --project AspNetCoreCosmosDb
+dotnet run --project DataLayer.API.Examples
 
 # Access Swagger UI
 # https://localhost:<port>/swagger
@@ -120,13 +120,13 @@ This project includes comprehensive unit and integration tests. For detailed tes
 dotnet test
 
 # Run unit tests only
-dotnet test AspNetCoreCosmosDb.UnitTests
+dotnet test DataLayer.API.Examples.UnitTests
 
 # Run integration tests (requires Azure authentication)
-dotnet test AspNetCoreCosmosDb.IntegrationTests
+dotnet test DataLayer.API.Examples.IntegrationTests
 ```
 
-For integration test setup and authentication details, see the [Integration Tests README](AspNetCoreCosmosDb.IntegrationTests/README.md).
+For integration test setup and authentication details, see the [Integration Tests README](DataLayer.API.Examples.IntegrationTests/README.md).
 
 ## Key Dependencies
 
