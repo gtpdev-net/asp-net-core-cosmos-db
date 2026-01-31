@@ -128,7 +128,7 @@ graph TB
 - **Access Restrictions**: Configured to accept traffic only from Application Gateway subnet
 - **Scaling**: Each App Service can scale independently based on domain-specific load
 - **Current Deployments**:
-  - Examples API (AspNetCoreCosmosDb project)
+  - Examples API (DataLayer.API.Example project)
   - Future domain-specific APIs as new projects are added to the solution
 
 ## Traffic Flow
@@ -393,5 +393,5 @@ graph TB
 ### Related Documentation
 
 - [ADR 0001: Deploy Each Project as Independent Azure App Service](adr/0001-deploy-each-project-as-independent-app-service.md)
-- [ADR 0001-0001: Deploy Entire Solution as Single App Service (Rejected)](adr/0001-0001-deploy-entire-solution-as-single-app-service.md)
-- [ADR 0001-0003: Use Azure App Service Deployment Slots (Rejected)](adr/0001-0003-use-azure-app-service-deployment-slots.md)
+- [ADR 0006: Deploy Entire Solution as Single App Service (Rejected)](adr/0006-deploy-entire-solution-as-single-app-service.md)
+- [ADR 0007: Use Azure App Service Deployment Slots (Rejected)](adr/0007-use-azure-app-service-deployment-slots.md)

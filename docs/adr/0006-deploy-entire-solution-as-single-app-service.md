@@ -1,4 +1,4 @@
-# ADR 0001-0001: Deploy Entire Solution as Single App Service
+# ADR 0006: Deploy Entire Solution as Single App Service
 
 ## Status
 

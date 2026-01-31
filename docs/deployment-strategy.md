@@ -248,7 +248,7 @@ flowchart TB
 **Core Configuration**:
 - **Deployment Model**: [Consolidated Deployment Architecture](consolidated-deployment-architecture.md)
 - **Network Model**: [Private Endpoint Architecture](app-service-private-endpoint-architecture.md)
-- **Project Structure**: AspNetCoreCosmosDb.Deployment hosting all API projects
+- **Project Structure**: DataLayer.API.Example.Deployment hosting all API projects
 
 ### Infrastructure Components
 
@@ -554,8 +554,8 @@ An API should be moved from consolidated to independent deployment when:
 **Unchanged**: Developers continue to work with individual API projects locally.
 
 **Supported Workflows**:
-- Run individual API projects (e.g., AspNetCoreCosmosDb) for isolated development
-- Run consolidated deployment project (AspNetCoreCosmosDb.Deployment) for integration testing
+- Run individual API projects (e.g., DataLayer.API.Example) for isolated development
+- Run consolidated deployment project (DataLayer.API.Example.Deployment) for integration testing
 - Run selective APIs via launchSettings.json profiles
 
 **Reference**: [Consolidated Deployment Architecture - Development Workflow](consolidated-deployment-architecture.md#development-workflow)
@@ -564,7 +564,7 @@ An API should be moved from consolidated to independent deployment when:
 
 **Single Pipeline Strategy**: One deployment pipeline supports both consolidated and independent deployments.
 
-**Pipeline Location**: `AspNetCoreCosmosDb.Deployment/.github/workflows/`
+**Pipeline Location**: `DataLayer.API.Example.Deployment/.github/workflows/`
 
 **Deployment Workflows**:
 1. **deploy-non-production.yml**: Deploys all APIs to consolidated non-production App Service
@@ -580,24 +580,24 @@ An API should be moved from consolidated to independent deployment when:
   "consolidated": {
     "appService": "app-consolidated-api-prod",
     "apis": [
-      "AspNetCoreCosmosDb",
-      "AspNetCoreCosmosDb.Products",
-      "AspNetCoreCosmosDb.Categories",
-      "AspNetCoreCosmosDb.Suppliers",
-      "AspNetCoreCosmosDb.Reports",
-      "AspNetCoreCosmosDb.Analytics",
-      "AspNetCoreCosmosDb.Notifications",
-      "AspNetCoreCosmosDb.Settings"
+      "DataLayer.API.Example",
+      "DataLayer.API.Example.Products",
+      "DataLayer.API.Example.Categories",
+      "DataLayer.API.Example.Suppliers",
+      "DataLayer.API.Example.Reports",
+      "DataLayer.API.Example.Analytics",
+      "DataLayer.API.Example.Notifications",
+      "DataLayer.API.Example.Settings"
     ]
   },
   "independent": [
     {
       "appService": "app-orders-api-prod",
-      "api": "AspNetCoreCosmosDb.Orders"
+      "api": "DataLayer.API.Example.Orders"
     },
     {
       "appService": "app-customers-api-prod",
-      "api": "AspNetCoreCosmosDb.Customers"
+      "api": "DataLayer.API.Example.Customers"
     }
   ]
 }
@@ -605,7 +605,7 @@ An API should be moved from consolidated to independent deployment when:
 
 ### Infrastructure as Code
 
-**Bicep Templates**: `AspNetCoreCosmosDb.Deployment/infrastructure/`
+**Bicep Templates**: `DataLayer.API.Example.Deployment/infrastructure/`
 
 **Key Templates**:
 - `main.bicep`: Orchestrates all infrastructure
@@ -797,7 +797,7 @@ gantt
 ### Phase 0: Preparation (6-7 weeks)
 
 #### Week 1-2: Create Shared Infrastructure
-- [ ] Create `AspNetCoreCosmosDb.Shared` class library project
+- [ ] Create `DataLayer.API.Example.Shared` class library project
 - [ ] Move common code: CosmosDbExtensions, RepositoryBase, Configuration
 - [ ] Update existing projects to reference Shared project
 - [ ] Run all tests to ensure no regressions
@@ -809,7 +809,7 @@ gantt
 - [ ] Document service registration patterns
 
 #### Week 5: Create Deployment Project
-- [ ] Create `AspNetCoreCosmosDb.Deployment` project
+- [ ] Create `DataLayer.API.Example.Deployment` project
 - [ ] Implement consolidated Program.cs loading all APIs
 - [ ] Add launchSettings.json with multiple profiles
 - [ ] Test consolidated deployment locally

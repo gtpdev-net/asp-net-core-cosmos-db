@@ -461,7 +461,7 @@ Single source of truth for API placement decisions.
     "lazy": [
       {
         "name": "Examples",
-        "project": "AspNetCoreCosmosDb",
+        "project": "DataLayer.API.Example",
         "metrics": {
           "avgCpu": 15,
           "avgMemory": 25,
@@ -470,7 +470,7 @@ Single source of truth for API placement decisions.
       },
       {
         "name": "Products",
-        "project": "AspNetCoreCosmosDb.Products",
+        "project": "DataLayer.API.Example.Products",
         "metrics": {
           "avgCpu": 20,
           "avgMemory": 30,
@@ -482,7 +482,7 @@ Single source of truth for API placement decisions.
     "greedy": [
       {
         "name": "Orders",
-        "project": "AspNetCoreCosmosDb.Orders",
+        "project": "DataLayer.API.Example.Orders",
         "metrics": {
           "avgCpu": 75,
           "avgMemory": 80,
@@ -492,7 +492,7 @@ Single source of truth for API placement decisions.
       },
       {
         "name": "Customers",
-        "project": "AspNetCoreCosmosDb.Customers",
+        "project": "DataLayer.API.Example.Customers",
         "metrics": {
           "avgCpu": 68,
           "avgMemory": 72,

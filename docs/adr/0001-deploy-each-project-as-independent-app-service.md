@@ -11,7 +11,7 @@
 
 ## Context
 
-The ASP.NET Core solution currently contains a single REST API project (AspNetCoreCosmosDb) for the 'Examples' domain, with plans to add additional projects for other domains in the future. We needed to determine the optimal deployment strategy for Azure App Service that would accommodate multiple domain-specific REST API projects within the same solution.
+The ASP.NET Core solution currently contains a single REST API project (DataLayer.API.Example) for the 'Examples' domain, with plans to add additional projects for other domains in the future. We needed to determine the optimal deployment strategy for Azure App Service that would accommodate multiple domain-specific REST API projects within the same solution.
 
 ### Options Considered
 

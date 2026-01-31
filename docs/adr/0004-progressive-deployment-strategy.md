@@ -233,20 +233,20 @@ requests
   "consolidated": {
     "appService": "app-consolidated-api-prod",
     "apis": [
-      "AspNetCoreCosmosDb",
-      "AspNetCoreCosmosDb.Products",
-      "AspNetCoreCosmosDb.Categories"
+      "DataLayer.API.Example",
+      "DataLayer.API.Example.Products",
+      "DataLayer.API.Example.Categories"
     ]
   },
   "independent": [
     {
       "appService": "app-orders-api-prod",
-      "api": "AspNetCoreCosmosDb.Orders",
+      "api": "DataLayer.API.Example.Orders",
       "reason": "Greedy API - CPU 75%, 5000 req/min"
     },
     {
       "appService": "app-customers-api-prod",
-      "api": "AspNetCoreCosmosDb.Customers",
+      "api": "DataLayer.API.Example.Customers",
       "reason": "Greedy API - CPU 68%, 3500 req/min"
     }
   ]

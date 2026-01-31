@@ -1,4 +1,4 @@
-# ADR 0001-0003: Use Azure App Service Deployment Slots
+# ADR 0007: Use Azure App Service Deployment Slots
 
 ## Status
 

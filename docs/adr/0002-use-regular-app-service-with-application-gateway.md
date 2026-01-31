@@ -142,7 +142,7 @@ This architecture can evolve to:
 ## Related Decisions
 
 - [ADR 0001: Deploy Each Project as Independent Azure App Service](0001-deploy-each-project-as-independent-app-service.md)
-- [ADR 0002-0001: Use ILB App Service Environment (Rejected)](0002-0001-use-ilb-app-service-environment.md)
+- [ADR 0008: Use ILB App Service Environment (Rejected)](0008-use-ilb-app-service-environment.md)
 
 ## References
 

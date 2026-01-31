@@ -333,12 +333,12 @@ az appservice plan create \
 Single App Service hosting all API projects (Examples, Orders, Customers, etc.)
 
 ### Deployment Model
-Uses the **AspNetCoreCosmosDb.Deployment** project which loads all API controllers via:
+Uses the **DataLayer.API.Example.Deployment** project which loads all API controllers via:
 ```csharp
 builder.Services.AddControllers()
-    .AddApplicationPart(typeof(AspNetCoreCosmosDb.Program).Assembly)
-    .AddApplicationPart(typeof(AspNetCoreCosmosDb.Orders.Program).Assembly)
-    .AddApplicationPart(typeof(AspNetCoreCosmosDb.Customers.Program).Assembly);
+    .AddApplicationPart(typeof(DataLayer.API.Example.Program).Assembly)
+    .AddApplicationPart(typeof(DataLayer.API.Example.Orders.Program).Assembly)
+    .AddApplicationPart(typeof(DataLayer.API.Example.Customers.Program).Assembly);
 ```
 
 ### Azure Portal Deployment
@@ -593,7 +593,7 @@ curl https://kv-apis-nonprod-unique.vault.azure.net
 
 After deploying non-production environment:
 
-1. **Deploy Application Code**: Deploy AspNetCoreCosmosDb.Deployment project
+1. **Deploy Application Code**: Deploy DataLayer.API.Example.Deployment project
 2. **Configure Monitoring Dashboards**: Create Azure Workbooks for API comparison
 3. **Start Monitoring Period**: Collect data for minimum 3 months
 4. **Weekly Performance Reviews**: Analyze and document API behavior patterns

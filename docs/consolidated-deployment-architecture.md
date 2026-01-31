@@ -54,10 +54,10 @@ flowchart TB
         subgraph DevEnv["Development Environment"]
             direction TB
             Dev1["Developer Working on Examples API"]
-            ExamplesProj["AspNetCoreCosmosDb Project (F5 to run)<br/>• Only Examples API controllers load<br/>• Only Examples dependencies initialize<br/>• Fast startup (~2-3 seconds)<br/>• Isolated testing and debugging"]
+            ExamplesProj["DataLayer.API.Example Project (F5 to run)<br/>• Only Examples API controllers load<br/>• Only Examples dependencies initialize<br/>• Fast startup (~2-3 seconds)<br/>• Isolated testing and debugging"]
             
             Dev2["Developer Working on Orders API"]
-            OrdersProj["AspNetCoreCosmosDb.Orders Project (F5 to run)<br/>• Only Orders API controllers load<br/>• Independent from Examples API"]
+            OrdersProj["DataLayer.API.Example.Orders Project (F5 to run)<br/>• Only Orders API controllers load<br/>• Independent from Examples API"]
             
             Dev1 -.-> ExamplesProj
             Dev2 -.-> OrdersProj
@@ -67,7 +67,7 @@ flowchart TB
         
         subgraph DeployEnv["Deployed Environment"]
             direction TB
-            subgraph ConsolidatedHost["AspNetCoreCosmosDb.Deployment (Consolidated Host)"]
+            subgraph ConsolidatedHost["DataLayer.API.Example.Deployment (Consolidated Host)"]
                 direction LR
                 ExamplesAPI["Examples API<br/>/api/examples"]
                 OrdersAPI["Orders API<br/>/api/orders"]
@@ -107,15 +107,15 @@ flowchart TB
 ### Solution Organization
 
 ```
-AspNetCoreCosmosDb.sln
+DataLayer.API.Example.sln
 ├── README.md
 ├── LICENSE
 │
-├── AspNetCoreCosmosDb/                          # Examples API (Runnable)
+├── DataLayer.API.Example/                          # Examples API (Runnable)
 │   ├── Program.cs                                # Standalone host
 │   ├── appsettings.json
 │   ├── appsettings.Development.json
-│   ├── AspNetCoreCosmosDb.csproj
+│   ├── DataLayer.API.Example.csproj
 │   ├── Controllers/
 │   │   └── ExamplesController.cs
 │   ├── Services/
@@ -128,10 +128,10 @@ AspNetCoreCosmosDb.sln
 │   └── Extensions/
 │       └── ExamplesServiceExtensions.cs          # DI registration for Examples module
 │
-├── AspNetCoreCosmosDb.Orders/                   # Orders API (Runnable)
+├── DataLayer.API.Example.Orders/                   # Orders API (Runnable)
 │   ├── Program.cs                                # Standalone host
 │   ├── appsettings.json
-│   ├── AspNetCoreCosmosDb.Orders.csproj
+│   ├── DataLayer.API.Example.Orders.csproj
 │   ├── Controllers/
 │   │   └── OrdersController.cs
 │   ├── Services/
@@ -144,10 +144,10 @@ AspNetCoreCosmosDb.sln
 │   └── Extensions/
 │       └── OrdersServiceExtensions.cs            # DI registration for Orders module
 │
-├── AspNetCoreCosmosDb.Customers/                # Customers API (Runnable)
+├── DataLayer.API.Example.Customers/                # Customers API (Runnable)
 │   ├── Program.cs
 │   ├── appsettings.json
-│   ├── AspNetCoreCosmosDb.Customers.csproj
+│   ├── DataLayer.API.Example.Customers.csproj
 │   ├── Controllers/
 │   ├── Services/
 │   ├── Entities/
@@ -155,8 +155,8 @@ AspNetCoreCosmosDb.sln
 │   └── Extensions/
 │       └── CustomersServiceExtensions.cs
 │
-├── AspNetCoreCosmosDb.Shared/                   # Shared Infrastructure (Class Library)
-│   ├── AspNetCoreCosmosDb.Shared.csproj
+├── DataLayer.API.Example.Shared/                   # Shared Infrastructure (Class Library)
+│   ├── DataLayer.API.Example.Shared.csproj
 │   ├── Configuration/
 │   │   └── CosmosDbConfig.cs
 │   ├── Extensions/
@@ -169,11 +169,11 @@ AspNetCoreCosmosDb.sln
 │       ├── ErrorHandlingMiddleware.cs
 │       └── LoggingMiddleware.cs
 │
-├── AspNetCoreCosmosDb.Deployment/               # Consolidated Host (Runnable)
+├── DataLayer.API.Example.Deployment/               # Consolidated Host (Runnable)
 │   ├── Program.cs                                # Loads all APIs
 │   ├── appsettings.json
 │   ├── appsettings.Production.json
-│   ├── AspNetCoreCosmosDb.Deployment.csproj
+│   ├── DataLayer.API.Example.Deployment.csproj
 │   ├── Properties/
 │   │   └── launchSettings.json
 │   │
@@ -210,12 +210,12 @@ AspNetCoreCosmosDb.sln
 │       ├── deploy.sh
 │       └── validate-deployment.ps1
 │
-├── AspNetCoreCosmosDb.UnitTests/                # Unit Tests
+├── DataLayer.API.Example.UnitTests/                # Unit Tests
 │   ├── Controllers/
 │   ├── Services/
 │   └── ...
 │
-└── AspNetCoreCosmosDb.IntegrationTests/         # Integration Tests
+└── DataLayer.API.Example.IntegrationTests/         # Integration Tests
     ├── Api/
     ├── TestBase/
     └── ...
@@ -224,24 +224,24 @@ AspNetCoreCosmosDb.sln
 ### Project Dependencies
 
 ```
-AspNetCoreCosmosDb.Deployment
+DataLayer.API.Example.Deployment
 ├── References:
-│   ├── AspNetCoreCosmosDb
-│   ├── AspNetCoreCosmosDb.Orders
-│   ├── AspNetCoreCosmosDb.Customers
-│   └── AspNetCoreCosmosDb.Shared
+│   ├── DataLayer.API.Example
+│   ├── DataLayer.API.Example.Orders
+│   ├── DataLayer.API.Example.Customers
+│   └── DataLayer.API.Example.Shared
 
-AspNetCoreCosmosDb (Examples API)
+DataLayer.API.Example (Examples API)
 ├── References:
-│   └── AspNetCoreCosmosDb.Shared
+│   └── DataLayer.API.Example.Shared
 
-AspNetCoreCosmosDb.Orders
+DataLayer.API.Example.Orders
 ├── References:
-│   └── AspNetCoreCosmosDb.Shared
+│   └── DataLayer.API.Example.Shared
 
-AspNetCoreCosmosDb.Customers
+DataLayer.API.Example.Customers
 ├── References:
-│   └── AspNetCoreCosmosDb.Shared
+│   └── DataLayer.API.Example.Shared
 ```
 
 ---
@@ -254,7 +254,7 @@ AspNetCoreCosmosDb.Customers
 
 ```bash
 # 1. Open solution in Visual Studio / VS Code / Rider
-# 2. Set AspNetCoreCosmosDb as startup project
+# 2. Set DataLayer.API.Example as startup project
 # 3. Press F5
 
 # Result: Only Examples API starts
@@ -264,7 +264,7 @@ AspNetCoreCosmosDb.Customers
 # - Isolated debugging experience
 ```
 
-**Program.cs** (AspNetCoreCosmosDb/Program.cs):
+**Program.cs** (DataLayer.API.Example/Program.cs):
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
 
@@ -289,7 +289,7 @@ app.Run();
 **Scenario**: Different developer working on Orders API
 
 ```bash
-# 1. Set AspNetCoreCosmosDb.Orders as startup project
+# 1. Set DataLayer.API.Example.Orders as startup project
 # 2. Press F5
 
 # Result: Only Orders API starts
@@ -303,7 +303,7 @@ app.Run();
 **Scenario**: Testing interactions between multiple APIs
 
 ```bash
-# 1. Set AspNetCoreCosmosDb.Deployment as startup project
+# 1. Set DataLayer.API.Example.Deployment as startup project
 # 2. Press F5
 
 # Result: ALL APIs start in single process
@@ -315,15 +315,15 @@ app.Run();
 # - Simulates production environment
 ```
 
-**Program.cs** (AspNetCoreCosmosDb.Deployment/Program.cs):
+**Program.cs** (DataLayer.API.Example.Deployment/Program.cs):
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
 
 // Add controllers from all API projects
 builder.Services.AddControllers()
-    .AddApplicationPart(typeof(AspNetCoreCosmosDb.Program).Assembly)
-    .AddApplicationPart(typeof(AspNetCoreCosmosDb.Orders.Program).Assembly)
-    .AddApplicationPart(typeof(AspNetCoreCosmosDb.Customers.Program).Assembly);
+    .AddApplicationPart(typeof(DataLayer.API.Example.Program).Assembly)
+    .AddApplicationPart(typeof(DataLayer.API.Example.Orders.Program).Assembly)
+    .AddApplicationPart(typeof(DataLayer.API.Example.Customers.Program).Assembly);
 
 // Register services from all modules
 builder.Services.AddExamplesServices(builder.Configuration);
@@ -350,9 +350,9 @@ app.Run();
 
 Each API project exposes a service registration extension method:
 
-**AspNetCoreCosmosDb/Extensions/ExamplesServiceExtensions.cs**:
+**DataLayer.API.Example/Extensions/ExamplesServiceExtensions.cs**:
 ```csharp
-namespace AspNetCoreCosmosDb.Extensions;
+namespace DataLayer.API.Example.Extensions;
 
 public static class ExamplesServiceExtensions
 {
@@ -374,9 +374,9 @@ public static class ExamplesServiceExtensions
 }
 ```
 
-**AspNetCoreCosmosDb.Orders/Extensions/OrdersServiceExtensions.cs**:
+**DataLayer.API.Example.Orders/Extensions/OrdersServiceExtensions.cs**:
 ```csharp
-namespace AspNetCoreCosmosDb.Orders.Extensions;
+namespace DataLayer.API.Example.Orders.Extensions;
 
 public static class OrdersServiceExtensions
 {
@@ -410,10 +410,10 @@ graph TB
     subgraph Wrapper[" "]
         subgraph AppService["Azure App Service (Deployed)<br/>app-consolidated-api-prod"]
             direction TB
-            subgraph Process["ASP.NET Core Process<br/>(AspNetCoreCosmosDb.Deployment)"]
+            subgraph Process["ASP.NET Core Process<br/>(DataLayer.API.Example.Deployment)"]
                 direction TB
                 Endpoints["<b>API Endpoints:</b><br/>• /api/examples<br/>• /api/orders<br/>• /api/customers"]
-                Controllers["<b>Controllers Loaded:</b><br/>• ExamplesController (AspNetCoreCosmosDb)<br/>• OrdersController (AspNetCoreCosmosDb.Orders)<br/>• CustomersController (AspNetCoreCosmosDb.Customers)"]
+                Controllers["<b>Controllers Loaded:</b><br/>• ExamplesController (DataLayer.API.Example)<br/>• OrdersController (DataLayer.API.Example.Orders)<br/>• CustomersController (DataLayer.API.Example.Customers)"]
                 
                 Endpoints -.-> Controllers
             end
@@ -477,11 +477,11 @@ On-Premises → VPN Gateway → Application Gateway → App Service (Consolidate
 
 ### Pipeline Strategy
 
-All CI/CD configuration resides in `AspNetCoreCosmosDb.Deployment` project.
+All CI/CD configuration resides in `DataLayer.API.Example.Deployment` project.
 
 ### GitHub Actions Workflow
 
-**File**: `AspNetCoreCosmosDb.Deployment/.github/workflows/deploy-production.yml`
+**File**: `DataLayer.API.Example.Deployment/.github/workflows/deploy-production.yml`
 
 ```yaml
 name: Deploy to Production
@@ -510,19 +510,19 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
     
     - name: Restore dependencies
-      run: dotnet restore AspNetCoreCosmosDb.sln
+      run: dotnet restore DataLayer.API.Example.sln
     
     - name: Build solution
-      run: dotnet build AspNetCoreCosmosDb.sln --configuration Release --no-restore
+      run: dotnet build DataLayer.API.Example.sln --configuration Release --no-restore
     
     - name: Run unit tests
-      run: dotnet test AspNetCoreCosmosDb.UnitTests/AspNetCoreCosmosDb.UnitTests.csproj --no-build --configuration Release
+      run: dotnet test DataLayer.API.Example.UnitTests/DataLayer.API.Example.UnitTests.csproj --no-build --configuration Release
     
     - name: Run integration tests
-      run: dotnet test AspNetCoreCosmosDb.IntegrationTests/AspNetCoreCosmosDb.IntegrationTests.csproj --no-build --configuration Release
+      run: dotnet test DataLayer.API.Example.IntegrationTests/DataLayer.API.Example.IntegrationTests.csproj --no-build --configuration Release
     
     - name: Publish deployment project
-      run: dotnet publish AspNetCoreCosmosDb.Deployment/AspNetCoreCosmosDb.Deployment.csproj --configuration Release --output ./publish
+      run: dotnet publish DataLayer.API.Example.Deployment/DataLayer.API.Example.Deployment.csproj --configuration Release --output ./publish
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -548,8 +548,8 @@ jobs:
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: rg-consolidated-api-prod
-        template: ./AspNetCoreCosmosDb.Deployment/infrastructure/main.bicep
-        parameters: ./AspNetCoreCosmosDb.Deployment/infrastructure/parameters/production.bicepparam
+        template: ./DataLayer.API.Example.Deployment/infrastructure/main.bicep
+        parameters: ./DataLayer.API.Example.Deployment/infrastructure/parameters/production.bicepparam
 
   deploy-app:
     runs-on: ubuntu-latest
@@ -590,7 +590,7 @@ jobs:
 
 ### Pull Request Validation
 
-**File**: `AspNetCoreCosmosDb.Deployment/.github/workflows/pr-validation.yml`
+**File**: `DataLayer.API.Example.Deployment/.github/workflows/pr-validation.yml`
 
 ```yaml
 name: PR Validation
@@ -614,13 +614,13 @@ jobs:
         dotnet-version: '8.0.x'
     
     - name: Restore dependencies
-      run: dotnet restore AspNetCoreCosmosDb.sln
+      run: dotnet restore DataLayer.API.Example.sln
     
     - name: Build solution
-      run: dotnet build AspNetCoreCosmosDb.sln --configuration Release --no-restore
+      run: dotnet build DataLayer.API.Example.sln --configuration Release --no-restore
     
     - name: Run all tests
-      run: dotnet test AspNetCoreCosmosDb.sln --no-build --configuration Release --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test DataLayer.API.Example.sln --no-build --configuration Release --logger "trx;LogFileName=test-results.trx"
     
     - name: Publish test results
       uses: dorny/test-reporter@v1
@@ -632,12 +632,12 @@ jobs:
     
     - name: Validate Bicep
       run: |
-        az bicep build --file ./AspNetCoreCosmosDb.Deployment/infrastructure/main.bicep
+        az bicep build --file ./DataLayer.API.Example.Deployment/infrastructure/main.bicep
 ```
 
 ### Infrastructure as Code
 
-**File**: `AspNetCoreCosmosDb.Deployment/infrastructure/main.bicep`
+**File**: `DataLayer.API.Example.Deployment/infrastructure/main.bicep`
 
 ```bicep
 @description('Environment name (e.g., prod, staging)')
@@ -761,9 +761,9 @@ The infrastructure requirements differ significantly between environments:
       "name": "pe-consolidated-api-nonprod"
     },
     "apis": [
-      "AspNetCoreCosmosDb",
-      "AspNetCoreCosmosDb.Orders",
-      "AspNetCoreCosmosDb.Customers"
+      "DataLayer.API.Example",
+      "DataLayer.API.Example.Orders",
+      "DataLayer.API.Example.Customers"
     ]
   },
   "independent": []
@@ -790,19 +790,19 @@ The infrastructure requirements differ significantly between environments:
       "name": "pe-consolidated-api-prod"
     },
     "apis": [
-      "AspNetCoreCosmosDb",
-      "AspNetCoreCosmosDb.Products",
-      "AspNetCoreCosmosDb.Categories",
-      "AspNetCoreCosmosDb.Suppliers",
-      "AspNetCoreCosmosDb.Reports",
-      "AspNetCoreCosmosDb.Analytics",
-      "AspNetCoreCosmosDb.Notifications",
-      "AspNetCoreCosmosDb.Settings"
+      "DataLayer.API.Example",
+      "DataLayer.API.Example.Products",
+      "DataLayer.API.Example.Categories",
+      "DataLayer.API.Example.Suppliers",
+      "DataLayer.API.Example.Reports",
+      "DataLayer.API.Example.Analytics",
+      "DataLayer.API.Example.Notifications",
+      "DataLayer.API.Example.Settings"
     ]
   },
   "independent": [
     {
-      "api": "AspNetCoreCosmosDb.Orders",
+      "api": "DataLayer.API.Example.Orders",
       "appServicePlan": {
         "name": "asp-orders-api-prod",
         "sku": "P1V3",
@@ -818,7 +818,7 @@ The infrastructure requirements differ significantly between environments:
       "reason": "Greedy API - High CPU (75%), high request rate (5000/min)"
     },
     {
-      "api": "AspNetCoreCosmosDb.Customers",
+      "api": "DataLayer.API.Example.Customers",
       "appServicePlan": {
         "name": "asp-customers-api-prod",
         "sku": "P1V3",
@@ -1323,7 +1323,7 @@ param independentApis = [
 
 ### Environment-Specific Configuration
 
-**Development** (AspNetCoreCosmosDb/appsettings.Development.json):
+**Development** (DataLayer.API.Example/appsettings.Development.json):
 ```json
 {
   "Logging": {
@@ -1342,7 +1342,7 @@ param independentApis = [
 }
 ```
 
-**Production** (AspNetCoreCosmosDb.Deployment/appsettings.Production.json):
+**Production** (DataLayer.API.Example.Deployment/appsettings.Production.json):
 ```json
 {
   "Logging": {
@@ -1376,9 +1376,9 @@ param independentApis = [
 
 ### Shared Configuration
 
-**AspNetCoreCosmosDb.Shared/Configuration/CosmosDbConfig.cs**:
+**DataLayer.API.Example.Shared/Configuration/CosmosDbConfig.cs**:
 ```csharp
-namespace AspNetCoreCosmosDb.Shared.Configuration;
+namespace DataLayer.API.Example.Shared.Configuration;
 
 public class CosmosDbConfig
 {
@@ -1448,7 +1448,7 @@ public class CosmosDbConfig
 
 ```bash
 # 1. Create shared project
-dotnet new classlib -n AspNetCoreCosmosDb.Shared
+dotnet new classlib -n DataLayer.API.Example.Shared
 
 # 2. Move shared code
 # Move to Shared:
@@ -1459,7 +1459,7 @@ dotnet new classlib -n AspNetCoreCosmosDb.Shared
 # - ServiceCollectionExtensions (base)
 
 # 3. Update project references
-# AspNetCoreCosmosDb → Reference → AspNetCoreCosmosDb.Shared
+# DataLayer.API.Example → Reference → DataLayer.API.Example.Shared
 ```
 
 ### Phase 2: Create Service Extension Methods
@@ -1467,7 +1467,7 @@ dotnet new classlib -n AspNetCoreCosmosDb.Shared
 **Goal**: Each API exposes a service registration extension
 
 ```csharp
-// AspNetCoreCosmosDb/Extensions/ExamplesServiceExtensions.cs
+// DataLayer.API.Example/Extensions/ExamplesServiceExtensions.cs
 public static class ExamplesServiceExtensions
 {
     public static IServiceCollection AddExamplesServices(
@@ -1490,14 +1490,14 @@ builder.Services.AddExamplesServices(builder.Configuration);
 
 ```bash
 # 1. Create deployment project
-dotnet new web -n AspNetCoreCosmosDb.Deployment
+dotnet new web -n DataLayer.API.Example.Deployment
 
 # 2. Add project references
-cd AspNetCoreCosmosDb.Deployment
-dotnet add reference ../AspNetCoreCosmosDb/AspNetCoreCosmosDb.csproj
-dotnet add reference ../AspNetCoreCosmosDb.Orders/AspNetCoreCosmosDb.Orders.csproj
-dotnet add reference ../AspNetCoreCosmosDb.Customers/AspNetCoreCosmosDb.Customers.csproj
-dotnet add reference ../AspNetCoreCosmosDb.Shared/AspNetCoreCosmosDb.Shared.csproj
+cd DataLayer.API.Example.Deployment
+dotnet add reference ../DataLayer.API.Example/DataLayer.API.Example.csproj
+dotnet add reference ../DataLayer.API.Example.Orders/DataLayer.API.Example.Orders.csproj
+dotnet add reference ../DataLayer.API.Example.Customers/DataLayer.API.Example.Customers.csproj
+dotnet add reference ../DataLayer.API.Example.Shared/DataLayer.API.Example.Shared.csproj
 
 # 3. Create consolidated Program.cs (see example above)
 ```
@@ -1506,9 +1506,9 @@ dotnet add reference ../AspNetCoreCosmosDb.Shared/AspNetCoreCosmosDb.Shared.cspr
 
 ```bash
 # 1. Create directory structure
-mkdir -p AspNetCoreCosmosDb.Deployment/.github/workflows
-mkdir -p AspNetCoreCosmosDb.Deployment/infrastructure/modules
-mkdir -p AspNetCoreCosmosDb.Deployment/infrastructure/parameters
+mkdir -p DataLayer.API.Example.Deployment/.github/workflows
+mkdir -p DataLayer.API.Example.Deployment/infrastructure/modules
+mkdir -p DataLayer.API.Example.Deployment/infrastructure/parameters
 
 # 2. Create workflow files (see CI/CD section above)
 
@@ -1519,17 +1519,17 @@ mkdir -p AspNetCoreCosmosDb.Deployment/infrastructure/parameters
 
 ```bash
 # 1. Test local development
-# Set AspNetCoreCosmosDb as startup project
-dotnet run --project AspNetCoreCosmosDb
+# Set DataLayer.API.Example as startup project
+dotnet run --project DataLayer.API.Example
 # Verify Examples API works in isolation
 
 # 2. Test consolidated deployment
-# Set AspNetCoreCosmosDb.Deployment as startup project
-dotnet run --project AspNetCoreCosmosDb.Deployment
+# Set DataLayer.API.Example.Deployment as startup project
+dotnet run --project DataLayer.API.Example.Deployment
 # Verify all APIs work together
 
 # 3. Run all tests
-dotnet test AspNetCoreCosmosDb.sln
+dotnet test DataLayer.API.Example.sln
 
 # 4. Test deployment to Azure
 # Deploy to non-production environment first
@@ -1543,8 +1543,8 @@ dotnet test AspNetCoreCosmosDb.sln
 # 1. Deploy infrastructure
 az deployment group create \
   --resource-group rg-consolidated-api-prod \
-  --template-file AspNetCoreCosmosDb.Deployment/infrastructure/main.bicep \
-  --parameters AspNetCoreCosmosDb.Deployment/infrastructure/parameters/production.bicepparam
+  --template-file DataLayer.API.Example.Deployment/infrastructure/main.bicep \
+  --parameters DataLayer.API.Example.Deployment/infrastructure/parameters/production.bicepparam
 
 # 2. Deploy application via CI/CD pipeline
 # Push to main branch triggers deployment
@@ -1577,16 +1577,16 @@ The hybrid architecture provides a clean migration path:
 
 ```
 Current State:
-└── AspNetCoreCosmosDb.Deployment (Consolidated)
-    ├── AspNetCoreCosmosDb
-    ├── AspNetCoreCosmosDb.Orders
-    └── AspNetCoreCosmosDb.Customers
+└── DataLayer.API.Example.Deployment (Consolidated)
+    ├── DataLayer.API.Example
+    ├── DataLayer.API.Example.Orders
+    └── DataLayer.API.Example.Customers
 
 Future State (if needed):
-├── Independent App Service: AspNetCoreCosmosDb (Examples)
-├── Independent App Service: AspNetCoreCosmosDb.Orders
-└── AspNetCoreCosmosDb.Deployment (Remaining APIs)
-    └── AspNetCoreCosmosDb.Customers
+├── Independent App Service: DataLayer.API.Example (Examples)
+├── Independent App Service: DataLayer.API.Example.Orders
+└── DataLayer.API.Example.Deployment (Remaining APIs)
+    └── DataLayer.API.Example.Customers
 ```
 
 **Migration Steps**:
@@ -1608,24 +1608,24 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["AspNetCoreCosmosDb.Deployment/AspNetCoreCosmosDb.Deployment.csproj", "AspNetCoreCosmosDb.Deployment/"]
-COPY ["AspNetCoreCosmosDb/AspNetCoreCosmosDb.csproj", "AspNetCoreCosmosDb/"]
-COPY ["AspNetCoreCosmosDb.Orders/AspNetCoreCosmosDb.Orders.csproj", "AspNetCoreCosmosDb.Orders/"]
-COPY ["AspNetCoreCosmosDb.Customers/AspNetCoreCosmosDb.Customers.csproj", "AspNetCoreCosmosDb.Customers/"]
-COPY ["AspNetCoreCosmosDb.Shared/AspNetCoreCosmosDb.Shared.csproj", "AspNetCoreCosmosDb.Shared/"]
+COPY ["DataLayer.API.Example.Deployment/DataLayer.API.Example.Deployment.csproj", "DataLayer.API.Example.Deployment/"]
+COPY ["DataLayer.API.Example/DataLayer.API.Example.csproj", "DataLayer.API.Example/"]
+COPY ["DataLayer.API.Example.Orders/DataLayer.API.Example.Orders.csproj", "DataLayer.API.Example.Orders/"]
+COPY ["DataLayer.API.Example.Customers/DataLayer.API.Example.Customers.csproj", "DataLayer.API.Example.Customers/"]
+COPY ["DataLayer.API.Example.Shared/DataLayer.API.Example.Shared.csproj", "DataLayer.API.Example.Shared/"]
 
-RUN dotnet restore "AspNetCoreCosmosDb.Deployment/AspNetCoreCosmosDb.Deployment.csproj"
+RUN dotnet restore "DataLayer.API.Example.Deployment/DataLayer.API.Example.Deployment.csproj"
 COPY . .
-WORKDIR "/src/AspNetCoreCosmosDb.Deployment"
-RUN dotnet build "AspNetCoreCosmosDb.Deployment.csproj" -c Release -o /app/build
+WORKDIR "/src/DataLayer.API.Example.Deployment"
+RUN dotnet build "DataLayer.API.Example.Deployment.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "AspNetCoreCosmosDb.Deployment.csproj" -c Release -o /app/publish
+RUN dotnet publish "DataLayer.API.Example.Deployment.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AspNetCoreCosmosDb.Deployment.dll"]
+ENTRYPOINT ["dotnet", "DataLayer.API.Example.Deployment.dll"]
 ```
 
 Deploy to:
@@ -1659,7 +1659,7 @@ Deploy to:
 
 ## Appendix A: Sample launchSettings.json
 
-**AspNetCoreCosmosDb.Deployment/Properties/launchSettings.json**:
+**DataLayer.API.Example.Deployment/Properties/launchSettings.json**:
 ```json
 {
   "profiles": {

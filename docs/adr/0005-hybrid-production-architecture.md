@@ -296,7 +296,7 @@ public class ApiClient
 
 ### Deployment Manifest
 
-**File**: `AspNetCoreCosmosDb.Deployment/deployment-manifest.prod.json`
+**File**: `DataLayer.API.Example.Deployment/deployment-manifest.prod.json`
 
 ```json
 {
@@ -319,14 +319,14 @@ public class ApiClient
     },
     "apis": [
       {
-        "name": "AspNetCoreCosmosDb",
+        "name": "DataLayer.API.Example",
         "displayName": "Examples API",
         "classification": "lazy",
         "resourceProfile": { "cpu": "15%", "memory": "25%", "requestRate": "100/min" },
         "classificationDate": "2026-01-30"
       },
       {
-        "name": "AspNetCoreCosmosDb.Products",
+        "name": "DataLayer.API.Example.Products",
         "displayName": "Products API",
         "classification": "lazy",
         "resourceProfile": { "cpu": "20%", "memory": "30%", "requestRate": "150/min" },
@@ -342,7 +342,7 @@ public class ApiClient
       "appServicePlan": "asp-orders-prod",
       "privateEndpoint": "pe-orders-api-prod",
       "api": {
-        "name": "AspNetCoreCosmosDb.Orders",
+        "name": "DataLayer.API.Example.Orders",
         "displayName": "Orders API",
         "classification": "greedy",
         "resourceProfile": { "cpu": "75%", "memory": "80%", "requestRate": "5000/min" },
@@ -363,7 +363,7 @@ public class ApiClient
       "appServicePlan": "asp-customers-prod",
       "privateEndpoint": "pe-customers-api-prod",
       "api": {
-        "name": "AspNetCoreCosmosDb.Customers",
+        "name": "DataLayer.API.Example.Customers",
         "displayName": "Customers API",
         "classification": "greedy",
         "resourceProfile": { "cpu": "68%", "memory": "72%", "requestRate": "3500/min" },
@@ -476,22 +476,22 @@ jobs:
       - name: Load deployment manifest
         id: manifest
         run: |
-          echo "manifest=$(cat AspNetCoreCosmosDb.Deployment/deployment-manifest.prod.json | jq -c .)" >> $GITHUB_OUTPUT
+          echo "manifest=$(cat DataLayer.API.Example.Deployment/deployment-manifest.prod.json | jq -c .)" >> $GITHUB_OUTPUT
       
       - name: Deploy infrastructure
         uses: azure/arm-deploy@v2
         with:
-          template: ./AspNetCoreCosmosDb.Deployment/infrastructure/main.bicep
+          template: ./DataLayer.API.Example.Deployment/infrastructure/main.bicep
           parameters: manifest='${{ steps.manifest.outputs.manifest }}'
       
       - name: Build solution
-        run: dotnet publish AspNetCoreCosmosDb.sln -c Release -o ./publish
+        run: dotnet publish DataLayer.API.Example.sln -c Release -o ./publish
       
       - name: Deploy consolidated App Service
         uses: azure/webapps-deploy@v3
         with:
           app-name: app-consolidated-api-prod
-          package: ./publish/AspNetCoreCosmosDb.Deployment
+          package: ./publish/DataLayer.API.Example.Deployment
       
       - name: Deploy independent App Services
         run: |

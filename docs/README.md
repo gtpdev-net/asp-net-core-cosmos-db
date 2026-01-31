@@ -48,15 +48,15 @@ Architecture decisions are documented in the [`adr/`](adr/) folder:
 
 #### Superseded ADRs
 
-- **[ADR 0001-0001: Deploy Entire Solution as Single App Service](adr/0001-0001-deploy-entire-solution-as-single-app-service.md)**
+- **[ADR 0006: Deploy Entire Solution as Single App Service](adr/0006-deploy-entire-solution-as-single-app-service.md)**
   - Rejected approach
   - Retained for historical context
 
-- **[ADR 0001-0003: Use Azure App Service Deployment Slots](adr/0001-0003-use-azure-app-service-deployment-slots.md)**
+- **[ADR 0007: Use Azure App Service Deployment Slots](adr/0007-use-azure-app-service-deployment-slots.md)**
   - Rejected approach
   - Retained for historical context
 
-- **[ADR 0002-0001: Use ILB App Service Environment](adr/0002-0001-use-ilb-app-service-environment.md)**
+- **[ADR 0008: Use ILB App Service Environment](adr/0008-use-ilb-app-service-environment.md)**
   - Rejected approach
   - Retained for historical context
 
