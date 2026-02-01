@@ -7,26 +7,26 @@ using Microsoft.Extensions.Logging;
 namespace DataLayer.API.Examples.UnitTests.Controllers;
 
 /// <summary>
-/// Unit tests for the ExamplesController class.
+/// Unit tests for the CosmosDbExamplesController class.
 /// </summary>
-public class ExamplesControllerTests
+public class CosmosDbExamplesControllerTests
 {
-    private readonly Mock<IExampleService> _mockService;
-    private readonly Mock<ILogger<ExamplesController>> _mockLogger;
-    private readonly ExamplesController _controller;
+    private readonly Mock<ICosmosDbExampleService> _mockService;
+    private readonly Mock<ILogger<CosmosDbExamplesController>> _mockLogger;
+    private readonly CosmosDbExamplesController _controller;
 
-    public ExamplesControllerTests()
+    public CosmosDbExamplesControllerTests()
     {
-        _mockService = new Mock<IExampleService>();
-        _mockLogger = new Mock<ILogger<ExamplesController>>();
-        _controller = new ExamplesController(_mockService.Object, _mockLogger.Object);
+        _mockService = new Mock<ICosmosDbExampleService>();
+        _mockLogger = new Mock<ILogger<CosmosDbExamplesController>>();
+        _controller = new CosmosDbExamplesController(_mockService.Object, _mockLogger.Object);
     }
 
     [Fact]
     public async Task GetAll_ShouldReturnOkWithAllExamples()
     {
         // Arrange
-        var expectedExamples = new List<Example>
+        var expectedExamples = new List<CosmosDbExample>
         {
             new() { Id = "1", Name = "Example 1", Category = "Electronics" },
             new() { Id = "2", Name = "Example 2", Category = "Books" }
@@ -38,7 +38,7 @@ public class ExamplesControllerTests
 
         // Assert
         var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-        var returnValue = okResult.Value.Should().BeAssignableTo<IEnumerable<Example>>().Subject;
+        var returnValue = okResult.Value.Should().BeAssignableTo<IEnumerable<CosmosDbExample>>().Subject;
         returnValue.Should().HaveCount(2);
         returnValue.Should().BeEquivalentTo(expectedExamples);
     }
@@ -47,7 +47,7 @@ public class ExamplesControllerTests
     public async Task GetById_WhenExampleExists_ShouldReturnOkWithExample()
     {
         // Arrange
-        var expectedExample = new Example 
+        var expectedExample = new CosmosDbExample 
         { 
             Id = "1", 
             Name = "Test Example", 
@@ -62,7 +62,7 @@ public class ExamplesControllerTests
 
         // Assert
         var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-        var returnValue = okResult.Value.Should().BeOfType<Example>().Subject;
+        var returnValue = okResult.Value.Should().BeOfType<CosmosDbExample>().Subject;
         returnValue.Should().BeEquivalentTo(expectedExample);
     }
 
@@ -72,7 +72,7 @@ public class ExamplesControllerTests
         // Arrange
         _mockService
             .Setup(s => s.GetExampleByIdAsync("999", "NonExistent"))
-            .ReturnsAsync((Example?)null);
+            .ReturnsAsync((CosmosDbExample?)null);
 
         // Act
         var result = await _controller.GetById("999", "NonExistent");
@@ -85,7 +85,7 @@ public class ExamplesControllerTests
     public async Task GetByCategory_ShouldReturnOkWithFilteredExamples()
     {
         // Arrange
-        var expectedExamples = new List<Example>
+        var expectedExamples = new List<CosmosDbExample>
         {
             new() { Id = "1", Name = "Example 1", Category = "Electronics" },
             new() { Id = "2", Name = "Example 2", Category = "Electronics" }
@@ -99,7 +99,7 @@ public class ExamplesControllerTests
 
         // Assert
         var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-        var returnValue = okResult.Value.Should().BeAssignableTo<IEnumerable<Example>>().Subject;
+        var returnValue = okResult.Value.Should().BeAssignableTo<IEnumerable<CosmosDbExample>>().Subject;
         returnValue.Should().HaveCount(2);
         returnValue.Should().AllSatisfy(e => e.Category.Should().Be("Electronics"));
     }
@@ -108,7 +108,7 @@ public class ExamplesControllerTests
     public async Task GetInStock_ShouldReturnOkWithInStockExamples()
     {
         // Arrange
-        var expectedExamples = new List<Example>
+        var expectedExamples = new List<CosmosDbExample>
         {
             new() { Id = "1", Name = "In Stock 1", InStock = true },
             new() { Id = "2", Name = "In Stock 2", InStock = true }
@@ -122,7 +122,7 @@ public class ExamplesControllerTests
 
         // Assert
         var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-        var returnValue = okResult.Value.Should().BeAssignableTo<IEnumerable<Example>>().Subject;
+        var returnValue = okResult.Value.Should().BeAssignableTo<IEnumerable<CosmosDbExample>>().Subject;
         returnValue.Should().HaveCount(2);
         returnValue.Should().AllSatisfy(e => e.InStock.Should().BeTrue());
     }
@@ -131,7 +131,7 @@ public class ExamplesControllerTests
     public async Task Create_ShouldReturnCreatedAtActionWithNewExample()
     {
         // Arrange
-        var newExample = new Example
+        var newExample = new CosmosDbExample
         {
             Id = "1",
             Name = "New Example",
@@ -139,7 +139,7 @@ public class ExamplesControllerTests
             Price = 99.99m
         };
         _mockService
-            .Setup(s => s.CreateExampleAsync(It.IsAny<Example>()))
+            .Setup(s => s.CreateExampleAsync(It.IsAny<CosmosDbExample>()))
             .ReturnsAsync(newExample);
 
         // Act
@@ -150,7 +150,7 @@ public class ExamplesControllerTests
         createdResult.ActionName.Should().Be(nameof(_controller.GetById));
         createdResult.RouteValues.Should().ContainKey("id").WhoseValue.Should().Be("1");
         createdResult.RouteValues.Should().ContainKey("category").WhoseValue.Should().Be("Electronics");
-        var returnValue = createdResult.Value.Should().BeOfType<Example>().Subject;
+        var returnValue = createdResult.Value.Should().BeOfType<CosmosDbExample>().Subject;
         returnValue.Should().BeEquivalentTo(newExample);
     }
 
@@ -158,7 +158,7 @@ public class ExamplesControllerTests
     public async Task Update_ShouldReturnOkWithUpdatedExample()
     {
         // Arrange
-        var updatedExample = new Example
+        var updatedExample = new CosmosDbExample
         {
             Id = "1",
             Name = "Updated Example",
@@ -166,7 +166,7 @@ public class ExamplesControllerTests
             Price = 149.99m
         };
         _mockService
-            .Setup(s => s.UpdateExampleAsync("1", It.IsAny<Example>()))
+            .Setup(s => s.UpdateExampleAsync("1", It.IsAny<CosmosDbExample>()))
             .ReturnsAsync(updatedExample);
 
         // Act
@@ -174,7 +174,7 @@ public class ExamplesControllerTests
 
         // Assert
         var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-        var returnValue = okResult.Value.Should().BeOfType<Example>().Subject;
+        var returnValue = okResult.Value.Should().BeOfType<CosmosDbExample>().Subject;
         returnValue.Should().BeEquivalentTo(updatedExample);
     }
 

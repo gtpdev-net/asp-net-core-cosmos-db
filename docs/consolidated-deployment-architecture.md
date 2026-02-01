@@ -163,7 +163,7 @@ DataLayer.API.Example.sln
 │   │   ├── CosmosDbExtensions.cs
 │   │   └── ServiceCollectionExtensions.cs
 │   ├── Repositories/
-│   │   ├── IRepository.cs
+│   │   ├── ICosmosDbRepository.cs
 │   │   └── CosmosRepositoryBase.cs
 │   └── Middleware/
 │       ├── ErrorHandlingMiddleware.cs
@@ -1454,7 +1454,7 @@ dotnet new classlib -n DataLayer.API.Example.Shared
 # Move to Shared:
 # - CosmosDbExtensions
 # - CosmosRepositoryBase
-# - IRepository
+# - ICosmosDbRepository
 # - CosmosDbConfig
 # - ServiceCollectionExtensions (base)
 

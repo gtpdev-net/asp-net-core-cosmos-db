@@ -6,26 +6,26 @@ using Microsoft.Extensions.Logging;
 namespace DataLayer.API.Examples.UnitTests.Services;
 
 /// <summary>
-/// Unit tests for the ExampleService class.
+/// Unit tests for the CosmosDbExampleService class.
 /// </summary>
-public class ExampleServiceTests
+public class CosmosDbExampleServiceTests
 {
-    private readonly Mock<IExampleRepository> _mockRepository;
-    private readonly Mock<ILogger<ExampleService>> _mockLogger;
-    private readonly ExampleService _service;
+    private readonly Mock<ICosmosDbExampleRepository> _mockRepository;
+    private readonly Mock<ILogger<CosmosDbExampleService>> _mockLogger;
+    private readonly CosmosDbExampleService _service;
 
-    public ExampleServiceTests()
+    public CosmosDbExampleServiceTests()
     {
-        _mockRepository = new Mock<IExampleRepository>();
-        _mockLogger = new Mock<ILogger<ExampleService>>();
-        _service = new ExampleService(_mockRepository.Object, _mockLogger.Object);
+        _mockRepository = new Mock<ICosmosDbExampleRepository>();
+        _mockLogger = new Mock<ILogger<CosmosDbExampleService>>();
+        _service = new CosmosDbExampleService(_mockRepository.Object, _mockLogger.Object);
     }
 
     [Fact]
     public async Task GetAllExamplesAsync_ShouldReturnAllExamples()
     {
         // Arrange
-        var expectedExamples = new List<Example>
+        var expectedExamples = new List<CosmosDbExample>
         {
             new() { Id = "1", Name = "Example 1", Category = "Electronics", Price = 99.99m, InStock = true },
             new() { Id = "2", Name = "Example 2", Category = "Books", Price = 29.99m, InStock = true }
@@ -46,7 +46,7 @@ public class ExampleServiceTests
     public async Task GetExampleByIdAsync_WhenExampleExists_ShouldReturnExample()
     {
         // Arrange
-        var expectedExample = new Example 
+        var expectedExample = new CosmosDbExample 
         { 
             Id = "1", 
             Name = "Test Example", 
@@ -72,7 +72,7 @@ public class ExampleServiceTests
         // Arrange
         _mockRepository
             .Setup(r => r.GetByIdAsync("999", "NonExistent"))
-            .ReturnsAsync((Example?)null);
+            .ReturnsAsync((CosmosDbExample?)null);
 
         // Act
         var result = await _service.GetExampleByIdAsync("999", "NonExistent");
@@ -86,7 +86,7 @@ public class ExampleServiceTests
     public async Task GetExamplesByCategoryAsync_ShouldReturnExamplesInCategory()
     {
         // Arrange
-        var expectedExamples = new List<Example>
+        var expectedExamples = new List<CosmosDbExample>
         {
             new() { Id = "1", Name = "Example 1", Category = "Electronics", Price = 99.99m },
             new() { Id = "2", Name = "Example 2", Category = "Electronics", Price = 149.99m }
@@ -109,7 +109,7 @@ public class ExampleServiceTests
     public async Task GetInStockExamplesAsync_ShouldReturnOnlyInStockExamples()
     {
         // Arrange
-        var expectedExamples = new List<Example>
+        var expectedExamples = new List<CosmosDbExample>
         {
             new() { Id = "1", Name = "In Stock 1", Category = "Electronics", InStock = true },
             new() { Id = "2", Name = "In Stock 2", Category = "Books", InStock = true }
@@ -132,7 +132,7 @@ public class ExampleServiceTests
     public async Task CreateExampleAsync_ShouldSetTimestampsAndCallRepository()
     {
         // Arrange
-        var newExample = new Example
+        var newExample = new CosmosDbExample
         {
             Id = "1",
             Name = "New Example",
@@ -142,8 +142,8 @@ public class ExampleServiceTests
         var beforeCreation = DateTime.UtcNow;
         
         _mockRepository
-            .Setup(r => r.CreateAsync(It.IsAny<Example>(), It.IsAny<string>()))
-            .ReturnsAsync((Example e, string pk) => e);
+            .Setup(r => r.CreateAsync(It.IsAny<CosmosDbExample>(), It.IsAny<string>()))
+            .ReturnsAsync((CosmosDbExample e, string pk) => e);
 
         // Act
         var result = await _service.CreateExampleAsync(newExample);
@@ -153,7 +153,7 @@ public class ExampleServiceTests
         result.CreatedAt.Should().BeOnOrAfter(beforeCreation);
         result.UpdatedAt.Should().BeOnOrAfter(beforeCreation);
         _mockRepository.Verify(
-            r => r.CreateAsync(It.Is<Example>(e => e.Id == "1" && e.Name == "New Example"), "Electronics"),
+            r => r.CreateAsync(It.Is<CosmosDbExample>(e => e.Id == "1" && e.Name == "New Example"), "Electronics"),
             Times.Once);
     }
 
@@ -161,7 +161,7 @@ public class ExampleServiceTests
     public async Task UpdateExampleAsync_ShouldSetIdAndUpdateTimestamp()
     {
         // Arrange
-        var updatedExample = new Example
+        var updatedExample = new CosmosDbExample
         {
             Name = "Updated Example",
             Category = "Electronics",
@@ -170,8 +170,8 @@ public class ExampleServiceTests
         var beforeUpdate = DateTime.UtcNow;
         
         _mockRepository
-            .Setup(r => r.UpdateAsync(It.IsAny<string>(), It.IsAny<Example>(), It.IsAny<string>()))
-            .ReturnsAsync((string id, Example e, string pk) => e);
+            .Setup(r => r.UpdateAsync(It.IsAny<string>(), It.IsAny<CosmosDbExample>(), It.IsAny<string>()))
+            .ReturnsAsync((string id, CosmosDbExample e, string pk) => e);
 
         // Act
         var result = await _service.UpdateExampleAsync("123", updatedExample);
@@ -181,7 +181,7 @@ public class ExampleServiceTests
         result.Id.Should().Be("123");
         result.UpdatedAt.Should().BeOnOrAfter(beforeUpdate);
         _mockRepository.Verify(
-            r => r.UpdateAsync("123", It.Is<Example>(e => e.Id == "123"), "Electronics"),
+            r => r.UpdateAsync("123", It.Is<CosmosDbExample>(e => e.Id == "123"), "Electronics"),
             Times.Once);
     }
 

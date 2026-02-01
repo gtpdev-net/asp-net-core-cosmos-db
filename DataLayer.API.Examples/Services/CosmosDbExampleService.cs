@@ -6,54 +6,54 @@ namespace DataLayer.API.Examples.Services;
 /// <summary>
 /// Service implementation for Example business logic operations.
 /// </summary>
-public class ExampleService : IExampleService
+public class CosmosDbExampleService : ICosmosDbExampleService
 {
-    private readonly IExampleRepository _exampleRepository;
-    private readonly ILogger<ExampleService> _logger;
+    private readonly ICosmosDbExampleRepository _exampleRepository;
+    private readonly ILogger<CosmosDbExampleService> _logger;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ExampleService"/> class.
+    /// Initializes a new instance of the <see cref="CosmosDbExampleService"/> class.
     /// </summary>
     /// <param name="exampleRepository">The example repository.</param>
     /// <param name="logger">The logger instance.</param>
-    public ExampleService(
-        IExampleRepository exampleRepository,
-        ILogger<ExampleService> logger)
+    public CosmosDbExampleService(
+        ICosmosDbExampleRepository exampleRepository,
+        ILogger<CosmosDbExampleService> logger)
     {
         _exampleRepository = exampleRepository;
         _logger = logger;
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<Example>> GetAllExamplesAsync()
+    public async Task<IEnumerable<CosmosDbExample>> GetAllExamplesAsync()
     {
         _logger.LogInformation("Retrieving all examples");
         return await _exampleRepository.GetAllAsync();
     }
 
     /// <inheritdoc />
-    public async Task<Example?> GetExampleByIdAsync(string id, string category)
+    public async Task<CosmosDbExample?> GetExampleByIdAsync(string id, string category)
     {
         _logger.LogInformation("Retrieving example with id: {ExampleId}", id);
         return await _exampleRepository.GetByIdAsync(id, category);
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<Example>> GetExamplesByCategoryAsync(string category)
+    public async Task<IEnumerable<CosmosDbExample>> GetExamplesByCategoryAsync(string category)
     {
         _logger.LogInformation("Retrieving examples in category: {Category}", category);
         return await _exampleRepository.GetExamplesByCategoryAsync(category);
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<Example>> GetInStockExamplesAsync()
+    public async Task<IEnumerable<CosmosDbExample>> GetInStockExamplesAsync()
     {
         _logger.LogInformation("Retrieving in-stock examples");
         return await _exampleRepository.GetInStockExamplesAsync();
     }
 
     /// <inheritdoc />
-    public async Task<Example> CreateExampleAsync(Example example)
+    public async Task<CosmosDbExample> CreateExampleAsync(CosmosDbExample example)
     {
         _logger.LogInformation("Creating new example: {ExampleName}", example.Name);
         
@@ -65,7 +65,7 @@ public class ExampleService : IExampleService
     }
 
     /// <inheritdoc />
-    public async Task<Example> UpdateExampleAsync(string id, Example example)
+    public async Task<CosmosDbExample> UpdateExampleAsync(string id, CosmosDbExample example)
     {
         _logger.LogInformation("Updating example with id: {ExampleId}", id);
         

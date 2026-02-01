@@ -12,9 +12,9 @@ namespace DataLayer.API.Examples.IntegrationTests.Api;
 /// All test data is automatically cleaned up after each test.
 /// </summary>
 [Collection("Integration Tests")]
-public class ExamplesApiTests : IntegrationTestBase
+public class CosmosDbExamplesApiTests : IntegrationTestBase
 {
-    public ExamplesApiTests(TestCollectionFixture fixture) : base(fixture.Factory)
+    public CosmosDbExamplesApiTests(TestCollectionFixture fixture) : base(fixture.Factory)
     {
     }
 
@@ -65,7 +65,7 @@ public class ExamplesApiTests : IntegrationTestBase
     public async Task Create_WithValidExample_ShouldReturnCreated()
     {
         // Arrange
-        var newExample = new Example
+        var newExample = new CosmosDbExample
         {
             Name = $"Test Product {Guid.NewGuid()}",
             Category = "IntegrationTest",
@@ -80,7 +80,7 @@ public class ExamplesApiTests : IntegrationTestBase
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         
-        var createdExample = await response.Content.ReadFromJsonAsync<Example>();
+        var createdExample = await response.Content.ReadFromJsonAsync<CosmosDbExample>();
         createdExample.Should().NotBeNull();
         createdExample!.Name.Should().Be(newExample.Name);
         createdExample.Category.Should().Be(newExample.Category);
@@ -94,7 +94,7 @@ public class ExamplesApiTests : IntegrationTestBase
     public async Task Update_WithValidData_ShouldReturnOk()
     {
         // Arrange - First create an example to update
-        var newExample = new Example
+        var newExample = new CosmosDbExample
         {
             Name = $"Original Product {Guid.NewGuid()}",
             Category = "IntegrationTest",
@@ -103,7 +103,7 @@ public class ExamplesApiTests : IntegrationTestBase
         };
         
         var createResponse = await Client.PostAsJsonAsync("/api/examples", newExample);
-        var createdExample = await createResponse.Content.ReadFromJsonAsync<Example>();
+        var createdExample = await createResponse.Content.ReadFromJsonAsync<CosmosDbExample>();
         
         // Track for cleanup
         TrackCreatedItem(createdExample!);
@@ -118,7 +118,7 @@ public class ExamplesApiTests : IntegrationTestBase
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         
-        var updatedExample = await response.Content.ReadFromJsonAsync<Example>();
+        var updatedExample = await response.Content.ReadFromJsonAsync<CosmosDbExample>();
         updatedExample.Should().NotBeNull();
         updatedExample!.Name.Should().Be(createdExample.Name);
         updatedExample.Price.Should().Be(149.99m);
@@ -128,7 +128,7 @@ public class ExamplesApiTests : IntegrationTestBase
     public async Task Delete_ShouldReturnNoContent()
     {
         // Arrange - First create an example to delete
-        var newExample = new Example
+        var newExample = new CosmosDbExample
         {
             Name = $"To Be Deleted {Guid.NewGuid()}",
             Category = "IntegrationTest",
@@ -137,7 +137,7 @@ public class ExamplesApiTests : IntegrationTestBase
         };
         
         var createResponse = await Client.PostAsJsonAsync("/api/examples", newExample);
-        var createdExample = await createResponse.Content.ReadFromJsonAsync<Example>();
+        var createdExample = await createResponse.Content.ReadFromJsonAsync<CosmosDbExample>();
         
         // Track for cleanup (in case delete fails)
         TrackCreatedItem(createdExample!);

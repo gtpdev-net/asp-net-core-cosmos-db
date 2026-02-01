@@ -4,7 +4,7 @@ namespace DataLayer.API.Examples.Repositories;
 /// Generic repository interface for CRUD operations on Cosmos DB entities.
 /// </summary>
 /// <typeparam name="T">The entity type.</typeparam>
-public interface IRepository<T> where T : class
+public interface ICosmosDbRepository<T> where T : class
 {
     /// <summary>
     /// Retrieves an entity by its ID and partition key.

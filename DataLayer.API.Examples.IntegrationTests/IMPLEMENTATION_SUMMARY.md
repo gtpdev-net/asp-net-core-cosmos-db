@@ -37,7 +37,7 @@ A comprehensive automatic cleanup system that ensures all test data is removed a
 
 ### Modified Files
 
-1. **`Api/ExamplesApiTests.cs`**
+1. **`Api/CosmosDbExamplesApiTests.cs`**
    - Changed from `IClassFixture<WebApplicationFactory<Program>>` to inheriting `IntegrationTestBase`
    - Added `[Collection("Integration Tests")]` attribute
    - Updated all test methods to use `Client` property instead of `_client`

@@ -81,7 +81,7 @@ builder.ConfigureServices(services =>
     if (descriptor != null) services.Remove(descriptor);
     
     // Add mock repository
-    services.AddSingleton<IExampleRepository, MockExampleRepository>();
+    services.AddSingleton<ICosmosDbExampleRepository, MockExampleRepository>();
 });
 ```
 
@@ -95,13 +95,13 @@ DataLayer.API.Examples.sln
 ├── DataLayer.API.Examples/              # Main application
 ├── DataLayer.API.Examples.UnitTests/    # Unit tests (isolated, fast)
 │   ├── Controllers/
-│   │   └── ExamplesControllerTests.cs
+│   │   └── CosmosDbExamplesControllerTests.cs
 │   ├── Services/
-│   │   └── ExampleServiceTests.cs
+│   │   └── CosmoDbExampleServiceTests.cs
 │   └── DataLayer.API.Examples.UnitTests.csproj
 └── DataLayer.API.Examples.IntegrationTests/  # Integration tests (full stack)
     ├── Api/
-    │   └── ExamplesApiTests.cs
+    │   └── CosmosDbExamplesApiTests.cs
     ├── README.md
     └── DataLayer.API.Examples.IntegrationTests.csproj
 ```

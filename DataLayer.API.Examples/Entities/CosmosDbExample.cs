@@ -3,7 +3,7 @@ namespace DataLayer.API.Examples.Entities;
 /// <summary>
 /// Represents an example entity stored in Cosmos DB.
 /// </summary>
-public class Example
+public class CosmosDbExample
 {
     /// <summary>
     /// Gets or sets the unique identifier for the example.

@@ -43,7 +43,7 @@ public abstract class IntegrationTestBase : IAsyncLifetime
         {
             try
             {
-                await _container.DeleteItemAsync<Example>(id, new PartitionKey(partitionKey));
+                await _container.DeleteItemAsync<CosmosDbExample>(id, new PartitionKey(partitionKey));
             }
             catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
@@ -74,7 +74,7 @@ public abstract class IntegrationTestBase : IAsyncLifetime
     /// Track an example entity that was created during the test for cleanup.
     /// </summary>
     /// <param name="example">The example entity to track.</param>
-    protected void TrackCreatedItem(Example example)
+    protected void TrackCreatedItem(CosmosDbExample example)
     {
         if (example?.Id != null && example.Category != null)
         {

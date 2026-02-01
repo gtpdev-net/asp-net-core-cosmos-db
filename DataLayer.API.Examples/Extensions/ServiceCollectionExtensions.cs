@@ -26,7 +26,7 @@ public static class ServiceCollectionExtensions
         CosmosDbExtensions.AddCosmosDbPersistence(services, cosmosDbConfig);
         
         // Register services
-        services.AddScoped<IExampleService, ExampleService>();
+        services.AddScoped<ICosmosDbExampleService, CosmosDbExampleService>();
         
         return services;
     }

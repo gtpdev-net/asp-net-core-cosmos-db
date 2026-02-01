@@ -40,7 +40,7 @@ public static class CosmosDbExtensions
         });
 
         // Register repositories
-        services.AddScoped<IExampleRepository, ExampleRepository>();
+        services.AddScoped<ICosmosDbExampleRepository, CosmosDbExampleRepository>();
         // Add more repositories here as needed:
         // services.AddScoped<IOrderRepository, OrderRepository>();
         // services.AddScoped<ICustomerRepository, CustomerRepository>();

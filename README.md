@@ -91,7 +91,7 @@ The API exposes the following endpoints for managing examples:
 
 The application uses a generic repository pattern with a base class that provides common CRUD operations:
 
-- **`IRepository<T>`** - Generic repository interface
+- **`ICosmosDbRepository<T>`** - Generic repository interface
 - **`CosmosRepositoryBase<T>`** - Base implementation with standard operations
 - **`ExampleRepository`** - Specific repository with custom queries
 

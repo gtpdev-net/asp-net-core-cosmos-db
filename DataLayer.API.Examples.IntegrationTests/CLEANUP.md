@@ -84,7 +84,7 @@ public class MyApiTests : IntegrationTestBase
 - [x] Created `IntegrationTestBase` with automatic cleanup
 - [x] Created `TestCollectionFixture` for shared setup/teardown
 - [x] Created `TestWebApplicationFactory` for test configuration
-- [x] Updated `ExamplesApiTests` to use new base class
+- [x] Updated `CosmosDbExamplesApiTests` to use new base class
 - [x] Added cleanup tracking to all tests that create data
 - [x] Added Microsoft.Azure.Cosmos package reference
 - [x] Updated documentation

@@ -10,7 +10,7 @@
 - [x] `IMPLEMENTATION_SUMMARY.md` - High-level overview
 
 ### Files Modified
-- [x] `Api/ExamplesApiTests.cs` - Updated to use cleanup infrastructure
+- [x] `Api/CosmosDbExamplesApiTests.cs` - Updated to use cleanup infrastructure
 - [x] `DataLayer.API.Examples.IntegrationTests.csproj` - Added Microsoft.Azure.Cosmos package
 - [x] `README.md` - Updated cleanup documentation
 

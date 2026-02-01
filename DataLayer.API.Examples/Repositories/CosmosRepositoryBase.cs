@@ -6,7 +6,7 @@ namespace DataLayer.API.Examples.Repositories;
 /// Base repository implementation for Cosmos DB operations.
 /// </summary>
 /// <typeparam name="T">The entity type.</typeparam>
-public abstract class CosmosRepositoryBase<T> : IRepository<T> where T : class
+public abstract class CosmosRepositoryBase<T> : ICosmosDbRepository<T> where T : class
 {
     /// <summary>
     /// The Cosmos DB container instance.
