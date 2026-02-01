@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Markdig" Version="0.37.0" />
+    <PackageReference Include="Markdig.SyntaxHighlighting" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="docs\**\*.md" />
+    <Content Include="docs\**\*.svg" />
+    <Content Include="docs\**\*.png" />
+    <Content Include="docs\**\*.drawio" />
+  </ItemGroup>
+
+</Project>
